@@ -1,10 +1,7 @@
 import { FC } from "react";
 
-interface SpinnerProps {
-    
-}
  
-const Spinner: FC<SpinnerProps> = () => {
+const Spinner: FC = () => {
     return ( 
         <svg
         className='spinner'
