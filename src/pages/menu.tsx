@@ -3,7 +3,7 @@ import Spinner from '@components/Spinner'
 import { parseISO } from 'date-fns'
 import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
-import { cartInterval, now } from 'src/constants/config'
+import { cartInterval, cartMinimum, now } from 'src/constants/config'
 import { trpc } from 'src/utils/trpc'
 import { BsCart } from 'react-icons/bs'
 import Cart from '~/components/Cart'
@@ -40,7 +40,7 @@ const MenuPage: FC = () => {
       if (showPopup === true){
         const timer = setTimeout(() => {
           setShowPopup(false)
-        }, 1000);
+        }, 500);
         return () => clearTimeout(timer);
       }
 
@@ -63,7 +63,7 @@ const MenuPage: FC = () => {
           return item
         })
       }
-      return [...prev, { id, quantity: cartInterval }]
+      return [...prev, { id, quantity: cartMinimum }]
     })
   }
 
@@ -83,7 +83,7 @@ const MenuPage: FC = () => {
             {/* Cart Icon */}
             
             
-            <Menu addToCart={addToCart} selectedTime={selectedTime} />
+            <Menu addToCart={addToCart} selectedTime={selectedTime} productsInCart={productsInCart} />
           </div>
         ) : (
           <div className='flex h-screen items-center justify-center'>

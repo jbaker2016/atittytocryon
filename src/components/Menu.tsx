@@ -7,14 +7,15 @@ import { capitalize, selectOptions } from "~/utils/helpers";
 import Image from "next/image";
 import { format, parseISO } from 'date-fns'
 import { Button } from '@chakra-ui/react'
-import { cartInterval } from "~/constants/config";
+import { cartInterval, cartMinimum } from "~/constants/config";
 
 interface MenuProps {
     selectedTime: string // as ISO string
     addToCart: (id: string, quantity: number) => void
+    productsInCart: { id: string; quantity: number }[]
 }
 
-const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
+const Menu: FC<MenuProps> = ({ selectedTime, addToCart, productsInCart }) => {
 
     const router = useRouter()
     const { data: menuItems } = trpc.menu.getMenuItems.useQuery(undefined, { refetchOnMount: false })
@@ -25,6 +26,8 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
       if (!filter) return true
       return menuItem.categories.includes(filter)
     })
+
+    console.log(productsInCart.length)
 
     return ( 
         <div className='bg-white'>
@@ -64,13 +67,24 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
                   </div>
                   <p className='text-sm font-medium text-gray-900'>${menuItem.price.toFixed(2)}</p>
                 </div>
-  
-                <Button
-                  className='mt-4'
-                  onClick={() => {addToCart(menuItem.id, 1)}}
-                  >
-                  Add {cartInterval} minutes
-                </Button>
+
+                { productsInCart.length>0 ? (
+                  <Button
+                    className='mt-4'
+                    onClick={() => {addToCart(menuItem.id, 1)}}
+                    >
+                    Add {cartInterval} minutes
+                  </Button>
+
+                ) : (
+                  <Button
+                    className='mt-4'
+                    onClick={() => {addToCart(menuItem.id, 1)}}
+                    >
+                    Add {cartMinimum} minutes
+                  </Button>
+                )}
+                
               </div>
             ))}
           </div>
