@@ -45,7 +45,7 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
         <div className='flex max-w-lg flex-wrap items gap-4'>
           {times?.map((time, i) => (
             <div className='rounded-sm bg-gray-100 p-2' key={`time-${i}`}>
-              <button onClick={() => setDate((prev) => ({ ...prev, dateTime: time }))} type='button'>
+              <button className='w-12'onClick={() => setDate((prev) => ({ ...prev, dateTime: time }))} type='button'>
                 {format(time, 'kk:mm')}
               </button>
             </div>

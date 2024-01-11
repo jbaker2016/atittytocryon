@@ -73,24 +73,24 @@ const MenuPage: FC = () => {
 
   return (
     <CartContext.Provider value={productsInCart}>
-    <setOpen.Provider value={setShowCart}>
-      {showPopup && <Popup />}
-      <Header/>
-      
-      <Cart removeFromCart={removeFromCart} open={showCart} setOpen={setShowCart} products={productsInCart} />
-      {isFetchedAfterMount && selectedTime ? (
-        <div className='mx-auto mt-0 max-w-7xl sm:px-6 lg:px-8'>
-          {/* Cart Icon */}
-           
-          
-          <Menu addToCart={addToCart} selectedTime={selectedTime} />
-        </div>
-      ) : (
-        <div className='flex h-screen items-center justify-center'>
-          <Spinner />
-        </div>
-      )}
-    </setOpen.Provider>
+      <setOpen.Provider value={setShowCart}>
+        {showPopup && <Popup />}
+        <Header/>
+        
+        <Cart removeFromCart={removeFromCart} open={showCart} setOpen={setShowCart} products={productsInCart} />
+        {isFetchedAfterMount && selectedTime ? (
+          <div className='mx-auto mt-0 max-w-7xl sm:px-6 lg:px-8'>
+            {/* Cart Icon */}
+            
+            
+            <Menu addToCart={addToCart} selectedTime={selectedTime} />
+          </div>
+        ) : (
+          <div className='flex h-screen items-center justify-center'>
+            <Spinner />
+          </div>
+        )}
+      </setOpen.Provider>
     </CartContext.Provider>
   )
 }

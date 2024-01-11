@@ -5,8 +5,6 @@ import Head from 'next/head'
 import { prisma } from '../server/db'
 import Calendar from 'react-calendar'
 import CalendarComponent from '~/components/Calendar'
-import { CartContext } from '~/components/CartContext'
-import { setOpen } from '~/components/CartContext'
 import Header from '~/components/Header'
 
 interface HomeProps {
@@ -26,18 +24,9 @@ const Home: NextPage<HomeProps> = ({ days, closedDays }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main>
-
-        
-      <CartContext.Provider value={[]}>
-        <setOpen.Provider value={() => {}}>
-          <Header/>
-          <CalendarComponent days={days} closedDays={closedDays} />
-        </setOpen.Provider>
-      </CartContext.Provider>
-        
- 
-      
+      <main>       
+        <Header/>
+        <CalendarComponent days={days} closedDays={closedDays} />  
       </main>
     </>
   )
