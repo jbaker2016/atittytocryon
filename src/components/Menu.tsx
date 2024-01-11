@@ -28,7 +28,7 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
 
     return ( 
         <div className='bg-white'>
-        <div className='mx-auto max-w-2xl py-16 px-4 sm:py-24 lg:max-w-full'>
+        <div className='mx-auto max-w-2xl py-4 px-4 sm:py-8 lg:max-w-full'>
           <div className='flex-col justify-between'>
             <h2 className='flex items-center gap-4 sm:text-2xl font-bold tracking-tight text-gray-900'>
               <HiArrowLeft className='cursor-pointer' onClick={() => router.push('/')} />

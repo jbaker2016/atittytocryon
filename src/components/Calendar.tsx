@@ -39,10 +39,10 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
   const times = date.justDate && getOpeningTimes(date.justDate, days)
 
   return (
-    <div className='flex h-screen flex-col items-center justify-center'>
+    <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>
       <h1 className='mb-2'>Book your appointment now!</h1>
       {date.justDate ? (
-        <div className='flex max-w-lg flex-wrap gap-4'>
+        <div className='flex max-w-lg flex-wrap items gap-4'>
           {times?.map((time, i) => (
             <div className='rounded-sm bg-gray-100 p-2' key={`time-${i}`}>
               <button onClick={() => setDate((prev) => ({ ...prev, dateTime: time }))} type='button'>

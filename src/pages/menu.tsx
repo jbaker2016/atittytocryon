@@ -8,6 +8,10 @@ import { trpc } from 'src/utils/trpc'
 import { BsCart } from 'react-icons/bs'
 import Cart from '~/components/Cart'
 import Popup from '~/components/Popup'
+import CartIcon from '~/components/CartIcon'
+import Header from '~/components/Header'
+import { CartContext } from '~/components/CartContext'
+import { setOpen } from '~/components/CartContext'
 
 const MenuPage: FC = () => {
   const router = useRouter()
@@ -68,24 +72,17 @@ const MenuPage: FC = () => {
   }
 
   return (
-    <>
+    <CartContext.Provider value={productsInCart}>
+    <setOpen.Provider value={setShowCart}>
       {showPopup && <Popup />}
+      <Header/>
+      
       <Cart removeFromCart={removeFromCart} open={showCart} setOpen={setShowCart} products={productsInCart} />
       {isFetchedAfterMount && selectedTime ? (
-        <div className='mx-auto mt-12 max-w-7xl sm:px-6 lg:px-8'>
+        <div className='mx-auto mt-0 max-w-7xl sm:px-6 lg:px-8'>
           {/* Cart Icon */}
-            <div className='flex w-full justify-end px-2'>
-              <button
-                type='button'
-                onClick={() => setShowCart((prev) => !prev)}
-                className='flex items-center justify-center rounded-lg bg-gray-200 p-3 text-lg font-medium text-indigo-600'>
-                <BsCart className='mr-2 text-lg' />
-                {productsInCart.reduce((acc, item) => acc + item.quantity, 0)}
-                {' '}
-                minutes
-              </button>
-            </div>
-
+           
+          
           <Menu addToCart={addToCart} selectedTime={selectedTime} />
         </div>
       ) : (
@@ -93,7 +90,8 @@ const MenuPage: FC = () => {
           <Spinner />
         </div>
       )}
-    </>
+    </setOpen.Provider>
+    </CartContext.Provider>
   )
 }
 
