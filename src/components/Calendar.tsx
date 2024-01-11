@@ -40,6 +40,7 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
 
   return (
     <div className='flex h-screen flex-col items-center justify-center'>
+      <h1 className='mb-2'>Book your appointment now!</h1>
       {date.justDate ? (
         <div className='flex max-w-lg flex-wrap gap-4'>
           {times?.map((time, i) => (

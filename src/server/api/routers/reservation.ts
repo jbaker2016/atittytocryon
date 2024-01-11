@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { adminProcedure, createTRPCRouter, publicProcedure } from "../trpc";
 
 export const reservationRouter = createTRPCRouter({
     
@@ -29,4 +29,22 @@ export const reservationRouter = createTRPCRouter({
             })
             return reservation
           }),
+
+          getReservations: adminProcedure.query(async ({ ctx }) => {
+            
+            const reservations = await ctx.prisma.reservation.findMany()
+        
+            return reservations
+
+          }),
+
+          deleteReservation: adminProcedure
+          .input(z.object({id: z.string() }))
+          .mutation(async ({ input, ctx }) => {
+            // Delete reservation from db
+            const { id }  = input
+            await ctx.prisma.reservation.delete({ where: { id } })
+      
+            return true
+          })
   })

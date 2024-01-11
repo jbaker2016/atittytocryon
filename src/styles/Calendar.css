@@ -1,11 +1,12 @@
 .react-calendar {
-    width: 450px;
-    max-width: 100%;
+    width: 400px;
+    max-width: 95%;
     background: white;
     border-radius: 15px;
     border: 1px solid rgb(209 213 219);
     font-family: Manrope, Helvetica, sans-serif;
     line-height: 1.125em;
+    font-size: 0.875em;
   }
   .react-calendar--doubleView {
     width: 700px;
@@ -28,7 +29,7 @@
   }
   
   /* Custom Navigation Styles */
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 350px) {
     .react-calendar__navigation__prev2-button,
     .react-calendar__navigation__prev-button {
       display: none;

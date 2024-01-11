@@ -22,6 +22,7 @@ const Home: NextPage<HomeProps> = ({ days, closedDays }) => {
       </Head>
 
       <main>
+        
         <CalendarComponent days={days} closedDays={closedDays} />
       </main>
     </>

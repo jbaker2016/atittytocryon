@@ -40,7 +40,7 @@ const menu: FC<menuProps> = () => {
         return () => URL.revokeObjectURL(objectUrl)
 
     }, [input.file])
-
+ 
     
     const { mutateAsync: addItem } = trpc.admin.addMenuItem.useMutation()
     const { mutateAsync: createPresignedUrl } = trpc.admin.createPresignedUrl.useMutation()
@@ -108,7 +108,7 @@ const menu: FC<menuProps> = () => {
     return ( 
         <>
         <div className=''>
-          <div className='mx-auto flex max-w-xl flex-col gap-2'>
+          <div className='mx-auto flex max-w-xl flex-col gap-2 mt-8'>
             <input
               name='name'
               className='h-12 rounded-sm border-none bg-gray-200'
@@ -168,9 +168,9 @@ const menu: FC<menuProps> = () => {
           </div>
           {error && <p className='text-xs text-red-600'>{error}</p>}
   
-          <div className='mx-auto mt-12 max-w-7xl'>
+          <div className='mx-auto mt-12 max-w-7xl max-w-xl items-center'>
             <p className='text-lg font-medium'>Your menu items:</p>
-            <div className='mt-6 mb-12 grid grid-cols-4 gap-8'>
+            <div className='mt-6 mb-12 grid grid-cols-1 md:grid-cols-2  gap-8'>
               {menuItems?.map((menuItem) => (
                 <div key={menuItem.id}>
                   <p>{menuItem.name}</p>
@@ -179,8 +179,8 @@ const menu: FC<menuProps> = () => {
                   </div>
                   <button
                     onClick={() => handleDelete(menuItem.imageKey, menuItem.id)}
-                    className='text-xs text-red-500'>
-                    delete
+                    className='text-red-500'>
+                    ❌
                   </button>
                 </div>
               ))}

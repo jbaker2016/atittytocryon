@@ -29,8 +29,8 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
     return ( 
         <div className='bg-white'>
         <div className='mx-auto max-w-2xl py-16 px-4 sm:py-24 lg:max-w-full'>
-          <div className='flex w-full justify-between'>
-            <h2 className='flex items-center gap-4 text-2xl font-bold tracking-tight text-gray-900'>
+          <div className='flex-col justify-between'>
+            <h2 className='flex items-center gap-4 sm:text-2xl font-bold tracking-tight text-gray-900'>
               <HiArrowLeft className='cursor-pointer' onClick={() => router.push('/')} />
               Available options for {format(parseISO(selectedTime), 'MMM do, yyyy')}
             </h2>
@@ -39,16 +39,16 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart }) => {
                 if (e?.value === 'all') setFilter(undefined)
                 else setFilter(e?.value)
               }}
-              className='border-none outline-none'
+              className='border-none outline-none w-60 my-4'
               placeholder='Filter by...'
               options={selectOptions}
             />
           </div>
   
-          <div className='mt-6 grid grid-cols-1 gap-y-10 gap-x-6 lg:grid-cols-2 xl:gap-x-8'>
+          <div className='mt-6 grid grid-cols-1 lg:grid-cols-2 gap-y-10 gap-x-6 xl:gap-x-8'>
             {filteredMenuItems?.map((menuItem) => (
               <div key={menuItem.id} className='group relative'>
-                <div className='min-h-0 aspect-w-1 aspect-h-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 hover:opacity-75 lg:h-80'>
+                <div className='min-h-0 aspect-w-1 aspect-h-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 hover:opacity-75 lg:h-60 lg:w-120'>
                   <div className='relative h-full w-full object-cover object-center lg:h-full lg:w-full'>
                     <img src={menuItem.url} alt={menuItem.name} style={{ objectFit: 'cover' }} />
                   </div>

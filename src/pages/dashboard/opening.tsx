@@ -144,7 +144,7 @@ const Opening: FC<OpeningProps> = ({ days }) => {
             disabled={!selectedDate}
             isLoading={isLoading}
             colorScheme='green'
-            variant='solid'>c
+            variant='solid'>
             {dayIsClosed ? 'Open shop this day' : 'Close shop this day'}
           </Button>
         </div>

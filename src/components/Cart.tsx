@@ -105,7 +105,7 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
                               const thisItem = products.find((product) => product.id === item.id)
                               return (
                                 <li key={item.id} className='flex py-6'>
-                                  <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+                                  <div className='h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
                                     <img
                                       src={item.url}
                                       alt={item.name}
@@ -148,9 +148,9 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
 
 
 
-                    <div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
+                    <div className='border-t border-gray-200 py-2 px-4 sm:px-6'>
 
-                    <form className="mb-10" onSubmit={(event) => handleCheckOut(event)}>
+                    <form className="mb-2" onSubmit={(event) => handleCheckOut(event)}>
                         <h2 className='flex justify-between text-base font-medium text-gray-900'>Cutomer Details</h2>
                         
                         <input 
@@ -186,7 +186,7 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
                       </div>
 
                       <div className='flex justify-between text-base font-medium text-gray-900'>
-                        <p>Subtotal</p>
+                        <p>Total</p>
                         <p>${total}</p>
                       </div>
                       <div className='mt-6'>
@@ -199,20 +199,6 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
                       </div>
                     
                     </form>
-
-
-                      <div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
-                        <p>
-                          or
-                          <button
-                            type='button'
-                            className='ml-1 font-medium text-indigo-600 hover:text-indigo-500'
-                            onClick={() => setOpen(false)}>
-                            Continue Shopping
-                            <span aria-hidden='true'> &rarr;</span>
-                          </button>
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </Dialog.Panel>

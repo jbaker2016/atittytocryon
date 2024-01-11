@@ -37,7 +37,7 @@ export const adminRouter = createTRPCRouter({
             code: 'UNAUTHORIZED',
             message: 'Invalid email or password'
         })
-    }),
+    }), 
 
     createPresignedUrl: adminProcedure.input(z.object({ fileType: z.string() })).mutation(async ({ input }) => {
         const id = nanoid()
