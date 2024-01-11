@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FC } from "react";
-import { api } from "~/utils/api";
 
 interface dashboardProps {
     
@@ -8,7 +7,6 @@ interface dashboardProps {
  
 const dashboard: FC<dashboardProps> = () => {
 
-    const {mutate} = api.admin.sensitive.useMutation()
 
     return ( 
         <div className="flex h-screen w-full items-center justify-center gap-8 font-medium">
@@ -19,4 +17,4 @@ const dashboard: FC<dashboardProps> = () => {
         );
 }
  
-export default dashboard;
+export default dashboard; 
