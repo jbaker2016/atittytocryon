@@ -30,9 +30,17 @@ export const reservationRouter = createTRPCRouter({
             return reservation
           }),
 
-          getReservations: publicProcedure.query(async ({ ctx }) => {
+          getReservations: adminProcedure.query(async ({ ctx }) => {
             
             const reservations = await ctx.prisma.reservation.findMany()
+        
+            return reservations
+
+          }),
+
+          getReservedTimes: publicProcedure.query(async ({ ctx }) => {
+            
+            const reservations = await ctx.prisma.reservation.findMany({ select: { selectedTime: true, minutes: true } })
         
             return reservations
 

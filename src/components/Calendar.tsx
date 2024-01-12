@@ -39,7 +39,9 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
 
   let times = date.justDate && getOpeningTimes(date.justDate, days) || undefined
 
-  const { data: reservations } = trpc.reservation.getReservations.useQuery()
+  const { data: reservations } = trpc.reservation.getReservedTimes.useQuery()
+
+  console.log(reservations)
 
   reservations?.forEach(reservation => {
     const timeStart = addMinutes(new Date(reservation.selectedTime), -appointmentBuffer)
@@ -48,6 +50,7 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
     times = times?.filter(time => (isBefore(time,timeStart) || isAfter(time, timeEnd)))
   });
 
+  console.log(closedDays)
 
   return (
     <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>
@@ -56,8 +59,8 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
         <div className='flex max-w-lg flex-wrap items-center gap-4'>
           {times?.map((time, i) => (
             <div className='rounded-sm bg-gray-100 p-2' key={`time-${i}`}>
-              <button className='w-12'onClick={() => setDate((prev) => ({ ...prev, dateTime: time }))} type='button'>
-                {format(time, 'kk:mm')}
+              <button className='w-16'onClick={() => setDate((prev) => ({ ...prev, dateTime: time }))} type='button'>
+                {format(time, 'h:mmaaaaa')}m
               </button>
             </div>
           ))}

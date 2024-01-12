@@ -3,7 +3,7 @@ import { formatISO } from 'date-fns'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import { prisma } from '../server/db'
-import Calendar from 'react-calendar'
+import Calendar from ''
 import CalendarComponent from '~/components/Calendar'
 import Header from '~/components/Header'
 
