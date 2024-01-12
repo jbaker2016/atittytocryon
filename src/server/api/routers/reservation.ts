@@ -30,7 +30,7 @@ export const reservationRouter = createTRPCRouter({
             return reservation
           }),
 
-          getReservations: adminProcedure.query(async ({ ctx }) => {
+          getReservations: publicProcedure.query(async ({ ctx }) => {
             
             const reservations = await ctx.prisma.reservation.findMany()
         

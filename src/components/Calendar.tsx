@@ -1,11 +1,12 @@
 import type { Day } from '@prisma/client'
-import { format, formatISO, isBefore, parse } from 'date-fns'
+import { addMinutes, differenceInHours, format, formatISO, isAfter, isBefore, parse } from 'date-fns'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { type FC, useEffect, useState } from 'react'
-import { now, OPENING_HOURS_INTERVAL } from 'src/constants/config'
+import { appointmentBuffer, now, OPENING_HOURS_INTERVAL } from 'src/constants/config'
 import { getOpeningTimes, roundToNearestMinutes } from 'src/utils/helpers'
 import type { DateTime } from 'src/utils/types'
+import { trpc } from '~/utils/trpc'
 
 const DynamicCalendar = dynamic(() => import('react-calendar'), { ssr: false })
 
@@ -36,7 +37,17 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
     }
   }, [date.dateTime, router])
 
-  const times = date.justDate && getOpeningTimes(date.justDate, days)
+  let times = date.justDate && getOpeningTimes(date.justDate, days) || undefined
+
+  const { data: reservations } = trpc.reservation.getReservations.useQuery()
+
+  reservations?.forEach(reservation => {
+    const timeStart = addMinutes(new Date(reservation.selectedTime), -appointmentBuffer)
+    const timeEnd =  addMinutes(reservation.selectedTime, Number(reservation.minutes)-1)
+
+    times = times?.filter(time => (isBefore(time,timeStart) || isAfter(time, timeEnd)))
+  });
+
 
   return (
     <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>

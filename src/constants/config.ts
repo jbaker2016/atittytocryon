@@ -11,3 +11,5 @@ export const now = new Date() // Do not use this in mutated functions, e.g. setH
 
 export const cartInterval = 15;
 export const cartMinimum = 30;
+
+export const appointmentBuffer = 55;

@@ -65,7 +65,7 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart, productsInCart }) => {
                       {menuItem.categories.map((c) => capitalize(c)).join(', ')}
                     </p>
                   </div>
-                  <p className='text-sm font-medium text-gray-900'>${menuItem.price.toFixed(2)}</p>
+                  <p className='text-sm font-medium text-gray-900'>${menuItem.price.toFixed(2)}/min</p>
                 </div>
 
                 { productsInCart.length>0 ? (
