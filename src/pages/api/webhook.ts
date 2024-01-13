@@ -18,8 +18,6 @@ export const stripe = new Stripe(process.env.STRIPE_SK!, {
 
 const webhookSecret = process.env.STRIPE_WH_SECRET || '';
 
-console.log(webhookSecret)
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -55,10 +53,6 @@ export default async function handler(
                 paid: true,
               },
             })
-
-            async () => {
-              //await updateReservationPaid({reservationId: orderId})
-            }
           }
           break;
 
@@ -69,8 +63,6 @@ export default async function handler(
       }
 
       res.status(200).send('ok');
-
-      
 
       res.json({ received: true });
     } catch (err) {
