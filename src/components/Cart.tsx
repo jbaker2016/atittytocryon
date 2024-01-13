@@ -11,9 +11,10 @@ interface CartProps {
   setOpen: Dispatch<SetStateAction<boolean>>
   products: { id: string; quantity: number }[]
   removeFromCart: (id: string) => void
+  selectedTime: string
 }
 
-const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
+const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart, selectedTime }) => {
   const router = useRouter()
 
   // tRPC
@@ -45,14 +46,26 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart }) => {
   const[emailCustomer, setEmailCustomer] = useState('');
   const[phoneCustomer, setPhoneCustomer] = useState('');
 
-  function handleCheckOut(event: any){
+
+  const { mutateAsync: createEmptyReservation } = trpc.reservation.createEmptyReservation.useMutation()
+
+  const handleCreateEmptyReservation = async () => {
+    const data = createEmptyReservation()
+    return (await data).id
+  }
+
+
+  async function handleCheckOut(event: any){
 
     event.preventDefault()
 
-    const customer = {nameCustomer, emailCustomer, phoneCustomer, minutes, total}
+    const reservationId = await handleCreateEmptyReservation()
+    //console.log(reservationId)
+
+    const customer = {reservationId, nameCustomer, emailCustomer, phoneCustomer, minutes, total}
     localStorage.setItem('customer', JSON.stringify(customer))
 
-    checkout({ products, nameCustomer, emailCustomer, phoneCustomer })
+    checkout({ reservationId, products, nameCustomer, emailCustomer, phoneCustomer, selectedTime })
   }
 
   return (

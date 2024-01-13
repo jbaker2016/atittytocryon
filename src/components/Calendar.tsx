@@ -41,16 +41,16 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
 
   const { data: reservations } = trpc.reservation.getReservedTimes.useQuery()
 
-  console.log(reservations)
 
   reservations?.forEach(reservation => {
-    const timeStart = addMinutes(new Date(reservation.selectedTime), -appointmentBuffer)
-    const timeEnd =  addMinutes(reservation.selectedTime, Number(reservation.minutes)-1)
 
-    times = times?.filter(time => (isBefore(time,timeStart) || isAfter(time, timeEnd)))
+    if (reservation.selectedTime != "") {
+      const timeStart = addMinutes(new Date(reservation.selectedTime), -appointmentBuffer)
+      const timeEnd =  addMinutes(reservation.selectedTime, Number(reservation.minutes)-1)
+      times = times?.filter(time => (isBefore(time,timeStart) || isAfter(time, timeEnd)))
+    }
+
   });
-
-  console.log(closedDays)
 
   return (
     <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>

@@ -27,8 +27,6 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart, productsInCart }) => {
       return menuItem.categories.includes(filter)
     })
 
-    console.log(productsInCart.length)
-
     return ( 
         <div className='bg-white'>
         <div className='mx-auto max-w-2xl py-4 px-4 sm:py-8 lg:max-w-full'>

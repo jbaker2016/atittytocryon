@@ -11,7 +11,7 @@ const reservations: FC<reservationsProps> = () => {
     const { data: reservations, refetch } = trpc.reservation.getReservations.useQuery()
     const { mutateAsync: deleteReservation } = trpc.reservation.deleteReservation.useMutation()
 
-    
+
     const handleDelete = async (id: string) => {
         await deleteReservation( { id } )
         refetch()
@@ -33,7 +33,7 @@ const reservations: FC<reservationsProps> = () => {
                 </thead>
 
                 <tbody>
-                {(reservations?.length || 0) > 0 && reservations?.map(reservation => (
+                {(reservations?.length || 0) > 0 && reservations?.map(reservation => ( reservation.paid && (
                     <tr key={reservation.id}>
                         <td>
                             <button 
@@ -53,7 +53,7 @@ const reservations: FC<reservationsProps> = () => {
                         <td>${reservation.cost}</td>
                         <td>{reservation.minutes}min</td>
                     </tr>
-                ))}
+                )))}
                 </tbody>
             </table>
         </div>

@@ -9,27 +9,25 @@ import { Reservation } from '@prisma/client'
 
 interface successProps {}
 
-const success: FC<successProps> = ({}) => {
+const  success:  FC<successProps> =  ({}) => {
   
   
   const [products, setProducts] = useState<{ id: string; quantity: number }[] | null | false>(null)
-  
-  const [reservationCurrent, setReservationCurrent] = useState<Reservation[]>([])
-  
-  const { mutate: addReservation} = trpc.reservation.addReservation.useMutation({ 
-      
-    onSuccess: (reservation) => {
-      setReservationCurrent((prev) => [...prev, reservation])
-    } 
-  })
+  const { mutateAsync: addReservation } =  trpc.reservation.addReservation.useMutation()
+
+  const { mutateAsync: updateReservationPaid } = trpc.reservation.updateReservationPaid.useMutation()
+    
 
   useEffect(() => {
 
+
+
     const customer = JSON.parse(localStorage.getItem('customer')||'')
 
-    console.log(customer)
+    //updateReservationPaid({reservationId: customer.reservationId})
 
-    addReservation({  
+    addReservation({
+      reservationId: customer.reservationId,
       nameCustomer: customer.nameCustomer,
       emailCustomer: customer.emailCustomer,
       phoneCustomer: customer.phoneCustomer,

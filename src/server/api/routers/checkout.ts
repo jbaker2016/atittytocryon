@@ -11,7 +11,9 @@ const stripe = new _stripe(process.env.STRIPE_SECRET_KEY!, {
 export const checkoutRouter = createTRPCRouter({
   checkoutSession: publicProcedure
     .input(
+
       z.object({
+        reservationId: z.string(),
         products: z.array(
           z.object({
             id: z.string(),
@@ -21,6 +23,8 @@ export const checkoutRouter = createTRPCRouter({
         nameCustomer: z.string(),
         emailCustomer: z.string(),
         phoneCustomer: z.string(),
+        selectedTime: z.string(),
+        
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -41,6 +45,9 @@ export const checkoutRouter = createTRPCRouter({
         if (productsInCart.length !== input.products.length) {
           throw new TRPCError({ code: 'CONFLICT', message: 'Some products are not available' })
         }
+
+        
+
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -76,22 +83,25 @@ export const checkoutRouter = createTRPCRouter({
 
             payment_intent_data: {
               "metadata": {
+                "orderId": input.reservationId,
                 "name": input.nameCustomer,
                 "email": input.emailCustomer,
                 "phone": input.phoneCustomer,
+                "selectedTime": input.selectedTime,
               }
             },
 
             metadata: {
+              "orderId": input.reservationId,
               "name": input.nameCustomer,
               "email": input.emailCustomer,
               "phone": input.phoneCustomer,
+              "selectedTime": input.selectedTime,
             },
             
             customer_email: input.emailCustomer, 
         })
 
-        
 
         return {
           url: session.url || '',

@@ -5,10 +5,8 @@ import { useRouter } from 'next/router'
 import { FC, useEffect, useState } from 'react'
 import { cartInterval, cartMinimum, now } from 'src/constants/config'
 import { trpc } from 'src/utils/trpc'
-import { BsCart } from 'react-icons/bs'
 import Cart from '~/components/Cart'
 import Popup from '~/components/Popup'
-import CartIcon from '~/components/CartIcon'
 import Header from '~/components/Header'
 import { CartContext } from '~/components/CartContext'
 import { setOpen } from '~/components/CartContext'
@@ -77,7 +75,7 @@ const MenuPage: FC = () => {
         {showPopup && <Popup />}
         <Header/>
         
-        <Cart removeFromCart={removeFromCart} open={showCart} setOpen={setShowCart} products={productsInCart} />
+        <Cart removeFromCart={removeFromCart} open={showCart} setOpen={setShowCart} products={productsInCart} selectedTime={selectedTime||''}/>
         {isFetchedAfterMount && selectedTime ? (
           <div className='mx-auto mt-0 max-w-7xl sm:px-6 lg:px-8'>
             {/* Cart Icon */}

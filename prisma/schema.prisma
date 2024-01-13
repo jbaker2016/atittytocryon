@@ -45,4 +45,5 @@ model Reservation {
   selectedTime  String
   minutes       String
   cost          String
+  paid          Boolean
 }
