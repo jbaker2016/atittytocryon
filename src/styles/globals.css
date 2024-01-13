@@ -4,15 +4,16 @@
 
 .closed-day {
   background-color: #550000;
-  color: white;
+  color: rgb(107,114,128);
+  background-color: #f0f0f0 !important;
 }
 
 .closed-day:hover {
-  background-color: #6d0000 !important;
-  color: white !important;
+  background-color: #fff !important;
+  background-color: rgb(238,242,255) !important;
 }
 
 .closed-day:enabled:focus {
-  background-color: #8a0000 !important;
-  color: white;
+  background-color: #fff !important;
+  background-color: rgb(238,242,255) !important;
 }
