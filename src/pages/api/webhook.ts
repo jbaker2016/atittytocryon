@@ -80,8 +80,7 @@ export default async function handler(
 
       res.json({ received: true });
     } catch (err) {
-      console.log("ERROR ERROR ERROR", err)
-      res.status(400).send(err+"webhookSecret"+webhookSecret);
+      res.status(400).send(err+"sig"+sig);
       return;
     }
   } else {
