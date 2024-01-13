@@ -1,5 +1,6 @@
 import type { Day } from '@prisma/client'
-import { addMinutes, differenceInHours, format, formatISO, isAfter, isBefore, parse } from 'date-fns'
+import { getDataTransformer } from '@trpc/server'
+import { addMinutes, differenceInHours, format, formatISO, isAfter, isBefore, isSameDay, parse } from 'date-fns'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { type FC, useEffect, useState } from 'react'
@@ -52,7 +53,21 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
 
   });
 
-  console.log(closedDays)
+  //console.log(closedDays[1]?.substring(0, 10))
+
+  let closedDays2: any
+
+  closedDays.forEach( (day, i) => {
+   closedDays2 = Date.parse(day)
+  })
+
+  function tileDisabled({ date }: any) {
+    if(closedDays.find(dDate => isSameDay(dDate, date))){
+      return true
+    } else {
+      return false
+    } 
+  }
 
   return (
     <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>
@@ -72,8 +87,8 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
           minDate={now}
           className='REACT-CALENDAR p-2'
           view='month'
-          tileDisabled={({ date }) => closedDays.includes(formatISO(date.setHours(0, 0, 0, 0)))}
-          //tileDisabled={({ date }) => date === date}
+          //tileDisabled={({ date }) => closedDays.includes(formatISO(date))}
+          tileDisabled={tileDisabled }
           onClickDay={(date) => setDate((prev) => ({ ...prev, justDate: date }))}
         />
       )}
