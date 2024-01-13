@@ -4,6 +4,7 @@ import { addMinutes, differenceInHours, format, formatISO, isAfter, isBefore, is
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { type FC, useEffect, useState } from 'react'
+import Calendar from 'react-calendar'
 import { appointmentBuffer, now, OPENING_HOURS_INTERVAL } from 'src/constants/config'
 import { getOpeningTimes, roundToNearestMinutes } from 'src/utils/helpers'
 import type { DateTime } from 'src/utils/types'
@@ -83,7 +84,7 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
           ))}
         </div>
       ) : (
-        <DynamicCalendar
+        <Calendar
           minDate={now}
           className='REACT-CALENDAR p-2'
           view='month'
