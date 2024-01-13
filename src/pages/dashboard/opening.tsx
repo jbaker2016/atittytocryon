@@ -53,9 +53,9 @@ const Opening: FC<OpeningProps> = ({ days }) => {
 
   function tileDisabled({ date }: any) {
     if(closedDays?.find(dDate => isSameDay(dDate, date))){
-      return true
+      return 'closed-day'
     } else {
-      return false
+      return null
     } 
   }
 
@@ -139,8 +139,8 @@ const Opening: FC<OpeningProps> = ({ days }) => {
             className='REACT-CALENDAR p-2'
             view='month'
             onClickDay={(date) => setSelectedDate(date)}
-            tileClassName={({ date }) => {return closedDays?.includes(formatISO(date)) ? 'closed-day' : null}}
-            tileDisabled={tileDisabled }
+            //tileClassName={({ date }) => {return closedDays?.includes(formatISO(date)) ? 'closed-day' : null}}
+            tileClassName={ tileDisabled }
           />
 
           <Button
