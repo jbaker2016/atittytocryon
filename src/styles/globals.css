@@ -9,8 +9,8 @@
 }
 
 .closed-day:hover {
-  background-color: #4f46e5 !important;
-  color: white !important;
+  background-color: rgb(238,242,255) !important;
+  color: rgb(107,114,128) !important;
 }
 
 .closed-day:enabled:focus {
