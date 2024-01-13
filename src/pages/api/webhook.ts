@@ -23,7 +23,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  if (req.method === "POST" || req.method === "GET") {
+  if (req.method === "POST") {
     const buf = await buffer(req);
     const sig = req.headers["stripe-signature"];
 
