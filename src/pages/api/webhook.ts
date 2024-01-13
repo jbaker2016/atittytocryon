@@ -18,6 +18,8 @@ export const stripe = new Stripe(process.env.STRIPE_SK!, {
 
 const webhookSecret = process.env.STRIPE_WH_SECRET || '';
 
+console.log(webhookSecret)
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -79,11 +81,11 @@ export default async function handler(
       res.json({ received: true });
     } catch (err) {
       console.log("ERROR ERROR ERROR", err)
-      res.status(400).send(err);
+      res.status(400).send(err+"webhookSecret"+webhookSecret);
       return;
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed");
+    res.status(405).end("Method Not Allowed", );
   }
 } 
