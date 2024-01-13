@@ -52,6 +52,8 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
 
   });
 
+  console.log(closedDays)
+
   return (
     <div className='flex h-screen flex-col px-4 items-center mt-8 justify-top'>
       <h1 className='mb-2'>Book your appointment now!</h1>

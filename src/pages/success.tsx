@@ -10,32 +10,26 @@ import { Reservation } from '@prisma/client'
 interface successProps {}
 
 const  success:  FC<successProps> =  ({}) => {
-  
-  
+    
   const [products, setProducts] = useState<{ id: string; quantity: number }[] | null | false>(null)
   const { mutateAsync: addReservation } =  trpc.reservation.addReservation.useMutation()
 
-  const { mutateAsync: updateReservationPaid } = trpc.reservation.updateReservationPaid.useMutation()
-    
-
   useEffect(() => {
-
-
-
-    const customer = JSON.parse(localStorage.getItem('customer')||'')
-
-    //updateReservationPaid({reservationId: customer.reservationId})
-
-    addReservation({
-      reservationId: customer.reservationId,
-      nameCustomer: customer.nameCustomer,
-      emailCustomer: customer.emailCustomer,
-      phoneCustomer: customer.phoneCustomer,
-      selectedTime: localStorage.getItem('selectedTime')||'',
-      minutes: customer.minutes,
-      cost: customer.total,
-    })
-
+    if (localStorage.getItem('customer')) {
+      const customer = JSON.parse(localStorage.getItem('customer')||'')
+      if (customer.reservationId) {
+        addReservation({
+          reservationId: customer.reservationId,
+          nameCustomer: customer.nameCustomer,
+          emailCustomer: customer.emailCustomer,
+          phoneCustomer: customer.phoneCustomer,
+          selectedTime: localStorage.getItem('selectedTime')||'',
+          minutes: customer.minutes,
+          cost: customer.total,
+        })
+      }
+    }
+    
     const products = localStorage.getItem('products')
     if (!products) setProducts(false)
     else setProducts(JSON.parse(products))
@@ -61,7 +55,7 @@ const  success:  FC<successProps> =  ({}) => {
       </div>
     )
 
-  if (products === false) return <div>"products === false"</div>
+  if (products === false) return <div>Nothing to display</div>
 
   const minutes = (
     itemsInCart?.reduce(
