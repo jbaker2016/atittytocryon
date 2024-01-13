@@ -35,7 +35,7 @@ export default async function handler(
       event = stripe.webhooks.constructEvent(buf, sig as string, webhookSecret);
 
       // Handle the event
-      switch (event.type) {
+      switch (event.type) { 
         case "checkout.session.completed":
           
           //const paymentIntentSucceeded = event.data.object
