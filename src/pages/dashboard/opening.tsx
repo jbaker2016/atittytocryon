@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/react'
 import TimeSelector from '@components/TimeSelector'
 import { Switch } from '@headlessui/react'
 import type { Day } from '@prisma/client'
-import { formatISO } from 'date-fns'
+import { formatISO, isSameDay } from 'date-fns'
 import { type FC, useState } from 'react'
 import { Calendar } from 'react-calendar'
 import toast, { Toaster } from 'react-hot-toast'
@@ -49,6 +49,14 @@ const Opening: FC<OpeningProps> = ({ days }) => {
       newOpeningHrs[index]![type] = time
       setOpeningHrs(newOpeningHrs)
     }
+  }
+
+  function tileDisabled({ date }: any) {
+    if(closedDays?.find(dDate => isSameDay(dDate, date))){
+      return true
+    } else {
+      return false
+    } 
   }
 
   return (
@@ -131,9 +139,8 @@ const Opening: FC<OpeningProps> = ({ days }) => {
             className='REACT-CALENDAR p-2'
             view='month'
             onClickDay={(date) => setSelectedDate(date)}
-            tileClassName={({ date }) => {
-              return closedDays?.includes(formatISO(date)) ? 'closed-day' : null
-            }}
+            tileClassName={({ date }) => {return closedDays?.includes(formatISO(date)) ? 'closed-day' : null}}
+            tileDisabled={tileDisabled }
           />
 
           <Button
