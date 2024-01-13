@@ -18,6 +18,8 @@ export const stripe = new Stripe(process.env.STRIPE_SK!, {
 
 const webhookSecret = process.env.STRIPE_WH_SECRET || '';
 
+console.log(webhookSecret)
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -43,8 +45,9 @@ export default async function handler(
           const paid = data.payment_status === 'paid'
 
           if (orderId && paid){
-
-            await prisma.reservation.update({
+            //const { mutate: updateReservationPaid } = trpc.reservation.updateReservationPaid.useMutation()
+            
+            const dataprisma = await prisma.reservation.update({
               where: {
                 id: orderId,
               },
@@ -53,6 +56,9 @@ export default async function handler(
               },
             })
 
+            async () => {
+              //await updateReservationPaid({reservationId: orderId})
+            }
           }
           break;
 
@@ -61,7 +67,10 @@ export default async function handler(
         console.log(`Unhandled event type ${event.type}`);
       
       }
+
       res.status(200).send('ok');
+
+      
 
       res.json({ received: true });
     } catch (err) {
