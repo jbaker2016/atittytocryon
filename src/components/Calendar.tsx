@@ -88,8 +88,8 @@ const CalendarComponent: FC<CalendarProps> = ({ days, closedDays }) => {
           minDate={now}
           className='REACT-CALENDAR p-2'
           view='month'
-          //tileDisabled={({ date }) => closedDays.includes(formatISO(date))}
-          tileDisabled={tileDisabled }
+          tileDisabled={({ date }) => closedDays.includes(formatISO(date))}
+          //tileDisabled={tileDisabled }
           onClickDay={(date) => setDate((prev) => ({ ...prev, justDate: date }))}
         />
       )}
