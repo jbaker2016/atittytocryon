@@ -23,7 +23,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  if (req.method === "POST") {
+  if (req.method === "POST" || req.method === "GET") {
     const buf = await buffer(req);
     const sig = req.headers["stripe-signature"];
 
@@ -71,6 +71,6 @@ export default async function handler(
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed"+req.method, );
+    res.status(405).end("Method Not Allowed"+req.method);
   }
 } 
