@@ -39,7 +39,8 @@ const Opening: FC<OpeningProps> = ({ days }) => {
   const { mutate: openDay } = trpc.opening.openDay.useMutation({ onSuccess: () => refetch() })
   const { data: closedDays, refetch } = trpc.opening.getClosedDays.useQuery()
 
-  const dayIsClosed = selectedDate && closedDays?.includes(formatISO(selectedDate))
+  //const dayIsClosed = selectedDate && closedDays?.includes(formatISO(selectedDate))
+  const dayIsClosed = selectedDate && closedDays?.find(dDate => isSameDay(dDate, selectedDate))
 
   // Curried for easier usage
   function _changeTime(day: Day) {
