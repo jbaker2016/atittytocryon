@@ -64,7 +64,7 @@ export default async function handler(
       
       }
 
-      //res.status(200).send('ok');
+      res.status(200).send('ok');
       res.status(200).end();
 
       res.json({ received: true });
@@ -74,6 +74,6 @@ export default async function handler(
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(406).end("Method Not Allowed"+req.method);
+    res.status(405).end("Method Not Allowed"+req.method);
   }
 } 
