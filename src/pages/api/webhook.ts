@@ -69,11 +69,11 @@ export default async function handler(
 
       res.json({ received: true });
     } catch (err) {
-      res.status(400).send(err+"sig"+sig);
+      res.status(400).send(err);
       return;
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed"+req.method);
+    res.status(405).end("Method Not Allowed");
   }
 } 
