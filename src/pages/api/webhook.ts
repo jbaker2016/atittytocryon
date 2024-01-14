@@ -65,7 +65,7 @@ export default async function handler(
       }
 
       res.status(200).send('ok');
-      res.status(200).end();
+      //res.status(200).end();
 
       res.json({ received: true });
     } catch (err) {

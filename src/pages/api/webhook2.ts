@@ -25,9 +25,9 @@ export default async function handler(
 
   if (req.method === "POST") {
     try {
-        
+
       res.status(200).send('ok');
-      res.status(200).end();
+      //res.status(200).end();
 
       res.json({ received: true });
     } catch (err) {
@@ -36,6 +36,6 @@ export default async function handler(
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed"+req.method);
+    res.status(405).end("Method Not Allowed");
   }
 } 
