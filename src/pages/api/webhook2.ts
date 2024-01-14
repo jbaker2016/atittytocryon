@@ -29,7 +29,7 @@ export default async function handler(
       res.status(200).send('ok');
       //res.status(200).end();
 
-      res.json({ received: true });
+      //res.json({ received: true });
     } catch (err) {
       res.status(400).send(err);
       return;
