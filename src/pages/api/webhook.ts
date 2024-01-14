@@ -44,7 +44,7 @@ export default async function handler(
 
           if (orderId && paid){
             //const { mutate: updateReservationPaid } = trpc.reservation.updateReservationPaid.useMutation()
-            
+            /*
             const dataprisma = await prisma.reservation.update({
               where: {
                 id: orderId,
@@ -53,6 +53,8 @@ export default async function handler(
                 paid: true,
               },
             })
+            
+            */
           }
           break;
 
