@@ -29,7 +29,7 @@ export default async function handler(
 
     let event: Stripe.Event;
 
-    console.log("STRIPE_WH_SECRET"+webhookSecret)
+    console.log("stripe-signature"+req.headers["stripe-signature"])
 
     try {
       event = stripe.webhooks.constructEvent(buf, sig as string, webhookSecret);
@@ -45,8 +45,7 @@ export default async function handler(
           const paid = data.payment_status === 'paid'
 
           if (orderId && paid){
-            //const { mutate: updateReservationPaid } = trpc.reservation.updateReservationPaid.useMutation()
-            /*
+
             const dataprisma = await prisma.reservation.update({
               where: {
                 id: orderId,
@@ -56,7 +55,6 @@ export default async function handler(
               },
             })
             
-            */
           }
           break;
 
@@ -76,6 +74,6 @@ export default async function handler(
     }
   } else {
     res.setHeader("Allow", "POST");
-    res.status(405).end("Method Not Allowed"+req.method);
+    res.status(406).end("Method Not Allowed"+req.method);
   }
 } 
