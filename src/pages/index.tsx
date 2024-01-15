@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { prisma } from '../server/db'
 import CalendarComponent from '~/components/Calendar'
 import Header from '~/components/Header'
+import Cart from '~/components/Cart'
 
 interface HomeProps {
   days: Day[]
@@ -25,6 +26,7 @@ const Home: NextPage<HomeProps> = ({ days, closedDays }) => {
 
       <main>       
         <Header/>
+        <Cart selectedTime={''}/>
         <CalendarComponent days={days} closedDays={closedDays} />  
       </main>
     </>

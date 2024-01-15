@@ -13,7 +13,6 @@
     "start": "next start",
     "stripe:listen": "stripe listen --forward-to atittytocryon.vercel.app/api/webhook",
     "stripe:trigger": "checkout.session.completed"
-
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
@@ -48,7 +47,8 @@
     "stripe": "^14.11.0",
     "styled-components": "^6.1.8",
     "superjson": "^2.2.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",

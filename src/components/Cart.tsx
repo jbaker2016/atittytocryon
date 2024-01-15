@@ -5,27 +5,29 @@ import { Fragment, type Dispatch, type FC, type SetStateAction, useState } from 
 import { HiX } from 'react-icons/hi'
 import { trpc } from 'src/utils/trpc'
 import { capitalize } from '~/utils/helpers'
+import { useShoppingCart } from './CartContext'
 
 interface CartProps {
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
-  products: { id: string; quantity: number }[]
-  removeFromCart: (id: string) => void
   selectedTime: string
 }
 
-const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart, selectedTime }) => {
+const Cart: FC<CartProps> = ({ selectedTime }) => {
+
+  const { closeCart, showCart, productsInCart, removeFromCart} = useShoppingCart()
+
   const router = useRouter()
 
   // tRPC
-  const { data: itemsInCart } = trpc.menu.getCartItems.useQuery(products)
+  const { data: itemsInCart } = trpc.menu.getCartItems.useQuery(productsInCart)
   const { mutate: checkout, isLoading } = trpc.checkout.checkoutSession.useMutation({
     onSuccess: ({ url }) => {
       router.push(url)
     },
+    
     onMutate: ({ products }) => {
-      localStorage.setItem('products', JSON.stringify(products))
+      localStorage.setItem('shoping-cart', JSON.stringify(products))
     },
+    
   })
 
   const total = (
@@ -65,12 +67,12 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart, selected
     const customer = {reservationId, nameCustomer, emailCustomer, phoneCustomer, minutes, total}
     localStorage.setItem('customer', JSON.stringify(customer))
 
-    checkout({ reservationId, products, nameCustomer, emailCustomer, phoneCustomer, selectedTime })
+    checkout({ reservationId, products:productsInCart, nameCustomer, emailCustomer, phoneCustomer, selectedTime })
   }
 
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={setOpen}>
+    <Transition.Root show={showCart} as={Fragment}>
+      <Dialog as='div' className='relative z-10' onClose={closeCart}>
         <Transition.Child
           as={Fragment}
           enter='ease-in-out duration-500'
@@ -104,7 +106,7 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart, selected
                           <button
                             type='button'
                             className='-m-2 p-2 text-gray-400 hover:text-gray-500'
-                            onClick={() => setOpen(false)}>
+                            onClick={closeCart}>
                             <span className='sr-only'>Close panel</span>
                             <HiX className='h-6 w-6' aria-hidden='true' />
                           </button>
@@ -115,7 +117,7 @@ const Cart: FC<CartProps> = ({ open, setOpen, products, removeFromCart, selected
                         <div className='flow-root'>
                           <ul role='list' className='-my-6 divide-y divide-gray-200'>
                             {itemsInCart?.map((item) => {
-                              const thisItem = products.find((product) => product.id === item.id)
+                              const thisItem = productsInCart.find((product) => product.id === item.id)
                               return (
                                 <li key={item.id} className='flex py-6'>
                                   <div className='h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
