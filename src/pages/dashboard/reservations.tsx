@@ -19,7 +19,7 @@ const reservations: FC<reservationsProps> = () => {
 
     return ( 
         <div className="p-4">
-            <h1>Orders</h1> 
+            <h2>Orders</h2> 
             <table className="w-full mt-4 text-xs text-gray-500 border border-gray-300 px-4 py-2">
                 <thead className="border-y text-gray-900">
                     <tr className="">

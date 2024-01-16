@@ -16,8 +16,8 @@ type ProductsInCart = {
 type ShoppingCartContext = {
     openCart: () => void
     closeCart: () => void
-    showCart: boolean,
-    showPopup: boolean,
+    showCart: boolean
+    showPopup: boolean
     productsInCart: ProductsInCart[]
     addToCart: (id: string, quantity: number) => void
     removeFromCart: (id: string) => void
@@ -44,6 +44,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         []
       )
 
+    /*
     useEffect(() => {
         if (ls && ls.getItem('shopping-cart')){
             setProductsInCart(JSON.parse(ls.getItem('shopping-cart')||'{}'));
@@ -56,7 +57,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         }
     }, [productsInCart])
 
-
+    */
 
     useEffect(() => {
         if (showPopup === true){
@@ -73,7 +74,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     const addToCart = (id: string, quantity: number) => {
       setShowPopup(true);
   
-      setProductsInCart((prev) => {
+      setProductsInCart((prev: ProductsInCart[]) => {
         const existing = prev.find((item) => item.id === id)
         if (existing) {
           return prev.map((item) => {
@@ -92,7 +93,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     }
 
     const removeFromCart = (id: string) => {
-      setProductsInCart((prev) => prev.filter((item) => item.id !== id))
+      setProductsInCart((prev: ProductsInCart[]) => prev.filter((item) => item.id !== id))
     }
 
   return (
