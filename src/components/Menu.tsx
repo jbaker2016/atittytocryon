@@ -66,7 +66,7 @@ const Menu: FC<MenuProps> = ({ selectedTime, addToCart, productsInCart }) => {
                   <p className='text-sm font-medium text-gray-900'>${menuItem.price.toFixed(2)}/min</p>
                 </div>
 
-                { productsInCart.length>0 ? (
+                {productsInCart.length > 0 ? (
                   <Button
                     className='mt-4'
                     onClick={() => {addToCart(menuItem.id, 1)}}

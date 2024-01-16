@@ -1,10 +1,12 @@
+
 import { Spinner } from '@chakra-ui/react'
 import Link from 'next/link'
-import { type FC, useState, useEffect } from 'react'
+import { type FC, useState, useEffect, use } from 'react'
 import { trpc } from 'src/utils/trpc'
 import { capitalize } from '~/utils/helpers'
 import { format, parseISO } from 'date-fns'
 import { useShoppingCart } from '~/components/CartContext'
+import { Router } from 'next/router'
 
 
 interface successProps {}
@@ -16,19 +18,28 @@ const  success:  FC<successProps> =  ({}) => {
   const { clearCart } = useShoppingCart()
 
   useEffect(() => {
-    
     const products = localStorage.getItem('shopping-cart')
+    
     if (!products) setProducts(false)
     else setProducts(JSON.parse(products))
-
-
     //clearCart()
 
   }, [])
 
 
+  useEffect (() => {
+
+    const handleRouteChange = () => {
+      clearCart()
+    }
+ 
+    Router.events.on('routeChangeComplete', handleRouteChange)
+
+  },[Router])
+
+
+
   // tRPC
-  
   const { data: itemsInCart } = trpc.menu.getCartItems.useQuery(products || [])
   const total = (
     itemsInCart?.reduce(
@@ -36,8 +47,6 @@ const  success:  FC<successProps> =  ({}) => {
       0
     ) ?? 0
   ).toFixed(2)
-
-
 
   if (products === null)
     return (
@@ -57,6 +66,8 @@ const  success:  FC<successProps> =  ({}) => {
 
   const selectedTime = localStorage.getItem('selectedTime')
 
+
+      Router.events.on
 
   return (
     <main className='relative lg:min-h-full'>
@@ -121,8 +132,8 @@ const  success:  FC<successProps> =  ({}) => {
             </dl>
 
             <div className='mt-16 border-t border-gray-200 py-6 text-right'>
-              <Link href='/menu' className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
-                Continue Shopping<span aria-hidden='true'> &rarr;</span>
+              <Link href='/' className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
+                Book another appointment<span aria-hidden='true'> &rarr;</span>
               </Link>
             </div>
           </div>

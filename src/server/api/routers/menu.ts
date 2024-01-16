@@ -69,7 +69,6 @@ export const menuRouter = createTRPCRouter({
 
   checkMenuStatus: publicProcedure.query(async () => {
     // Mock menu checking logic
-    await sleep(1000)
 
     return true
   }),

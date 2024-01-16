@@ -38,7 +38,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     
     const ls = typeof window !== "undefined" ? window.localStorage : null;
 
-    const [productsInCart, setProductsInCart] = useLocalStorage<ProductsInCart[]>(
+    const [productsInCart, setProductsInCart] = useLocalStorage(
       "shopping-cart", 
       []
     )
@@ -56,6 +56,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     const closeCart = () => setShowCart(false)
 
     const addToCart = (id: string, quantity: number) => {
+      
       setShowPopup(true);
   
       setProductsInCart((prev: ProductsInCart[]) => {
@@ -70,7 +71,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         if (productsInCart.length > 0){
           return [...prev, { id, quantity: cartInterval }]
         } else {
-          return [...prev, { id, quantity: cartMinimum }]
+          return [{ id, quantity: cartMinimum }]
         }
         
       })
