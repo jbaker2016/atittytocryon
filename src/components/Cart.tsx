@@ -25,7 +25,7 @@ const Cart: FC<CartProps> = ({ selectedTime }) => {
     },
     
     onMutate: ({ products }) => {
-      localStorage.setItem('shoping-cart', JSON.stringify(products))
+      localStorage.setItem('shopping-cart', JSON.stringify(products))
     },
     
   })
@@ -50,7 +50,8 @@ const Cart: FC<CartProps> = ({ selectedTime }) => {
 
 
   const { mutateAsync: createEmptyReservation } = trpc.reservation.createEmptyReservation.useMutation()
-
+  const { mutateAsync: addReservation } =  trpc.reservation.addReservation.useMutation()
+  
   const handleCreateEmptyReservation = async () => {
     const data = createEmptyReservation()
     return (await data).id
@@ -62,7 +63,17 @@ const Cart: FC<CartProps> = ({ selectedTime }) => {
     event.preventDefault()
 
     const reservationId = await handleCreateEmptyReservation()
-    //console.log(reservationId)
+
+    addReservation({
+      reservationId: reservationId,
+      nameCustomer: nameCustomer,
+      emailCustomer: emailCustomer,
+      phoneCustomer: phoneCustomer,
+      selectedTime: localStorage.getItem('selectedTime')||'',
+      minutes: minutes,
+      cost: total,
+    })
+    
 
     const customer = {reservationId, nameCustomer, emailCustomer, phoneCustomer, minutes, total}
     localStorage.setItem('customer', JSON.stringify(customer))

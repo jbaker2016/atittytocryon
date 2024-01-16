@@ -21,6 +21,7 @@ type ShoppingCartContext = {
     productsInCart: ProductsInCart[]
     addToCart: (id: string, quantity: number) => void
     removeFromCart: (id: string) => void
+    clearCart: () => void
 }
 
 
@@ -37,27 +38,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     
     const ls = typeof window !== "undefined" ? window.localStorage : null;
 
-    //const [productsInCart, setProductsInCart] = useState<{ id: string; quantity: number }[]>([])
-    
     const [productsInCart, setProductsInCart] = useLocalStorage<ProductsInCart[]>(
-        "shopping-cart",
-        []
-      )
-
-    /*
-    useEffect(() => {
-        if (ls && ls.getItem('shopping-cart')){
-            setProductsInCart(JSON.parse(ls.getItem('shopping-cart')||'{}'));
-        }
-    }, []);
-
-    useEffect(() => {
-        if (productsInCart?.length >= 0){
-            localStorage.setItem('shopping-cart', JSON.stringify(productsInCart));
-        }
-    }, [productsInCart])
-
-    */
+      "shopping-cart", 
+      []
+    )
 
     useEffect(() => {
         if (showPopup === true){
@@ -82,7 +66,13 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
             return item
           })
         }
-        return [...prev, { id, quantity: cartMinimum }]
+
+        if (productsInCart.length > 0){
+          return [...prev, { id, quantity: cartInterval }]
+        } else {
+          return [...prev, { id, quantity: cartMinimum }]
+        }
+        
       })
     }
     
@@ -96,6 +86,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       setProductsInCart((prev: ProductsInCart[]) => prev.filter((item) => item.id !== id))
     }
 
+    const clearCart = () => {
+      setProductsInCart([])
+    }
+
+
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -105,7 +100,8 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         showPopup,
         productsInCart,
         addToCart, 
-        removeFromCart
+        removeFromCart,
+        clearCart
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { type FC, useState, useEffect } from 'react'
 import { trpc } from 'src/utils/trpc'
 import { capitalize } from '~/utils/helpers'
 import { format, parseISO } from 'date-fns'
-import { Reservation } from '@prisma/client'
+import { useShoppingCart } from '~/components/CartContext'
 
 
 interface successProps {}
@@ -12,27 +12,18 @@ interface successProps {}
 const  success:  FC<successProps> =  ({}) => {
     
   const [products, setProducts] = useState<{ id: string; quantity: number }[] | null | false>(null)
-  const { mutateAsync: addReservation } =  trpc.reservation.addReservation.useMutation()
+
+  const { clearCart } = useShoppingCart()
 
   useEffect(() => {
-    if (localStorage.getItem('customer')) {
-      const customer = JSON.parse(localStorage.getItem('customer')||'')
-      if (customer.reservationId) {
-        addReservation({
-          reservationId: customer.reservationId,
-          nameCustomer: customer.nameCustomer,
-          emailCustomer: customer.emailCustomer,
-          phoneCustomer: customer.phoneCustomer,
-          selectedTime: localStorage.getItem('selectedTime')||'',
-          minutes: customer.minutes,
-          cost: customer.total,
-        })
-      }
-    }
     
-    const products = localStorage.getItem('products')
+    const products = localStorage.getItem('shopping-cart')
     if (!products) setProducts(false)
     else setProducts(JSON.parse(products))
+
+
+    //clearCart()
+
   }, [])
 
 
@@ -67,8 +58,6 @@ const  success:  FC<successProps> =  ({}) => {
   const selectedTime = localStorage.getItem('selectedTime')
 
 
-
-
   return (
     <main className='relative lg:min-h-full'>
       <div className='h-80 overflow-hidden lg:absolute lg:h-full lg:w-1/2 lg:pr-4 xl:pr-12'>
@@ -91,9 +80,9 @@ const  success:  FC<successProps> =  ({}) => {
               We appreciate your order, we’re currently processing it. So hang tight and we’ll send you
               confirmation very soon!
             </p>
-
+            
             <dl className='mt-16 text-sm font-medium'>
-              <dt className='text-gray-900'>Your order for: {format(parseISO(selectedTime || ""), 'MMMM do, yyyy, HH:mm')}</dt>
+              <dt className='text-gray-900'>Your order for: {format(parseISO(selectedTime || ""), 'MMMM do, yyyy, h:mmaaaaa')}m</dt>
             </dl>
 
             <ul
